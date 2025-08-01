@@ -1,106 +1,189 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>NFT Lending Protocol</title>
-    <link rel="stylesheet" type="text/css" href="/style.css" />
-  </head>
-  <body>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麻雀予約サイト - 雀荘経営者様専用</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
     <div class="container">
-      <div class="header">
-        <h1 class="siteTitle">Copernaum</h1>
-      </div>
-      <div class="siteMenu">
-        <div class="menu">Lend</div>
-        <div class="menu">Borrow</div>
-        <div class="menu">Stake</div>
-        <div class="menu">Governance</div>
-      </div>
-      <div class="section">
-        <h2 class="section">Deposits</h2>
-        <div class="itemContainer">
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">claim</button>
-            <button class="item">withdraw</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">claim</button>
-            <button class="item">withdraw</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">claim</button>
-            <button class="item">withdraw</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">claim</button>
-            <button class="item">withdraw</button>
-          </div>
+        <!-- ヘッダー -->
+        <header class="header">
+            <h1 class="site-title">麻雀予約サイト</h1>
+            <p class="subtitle">雀荘経営者様専用管理システム</p>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span id="userName"></span>様
+                <button class="logout-btn" onclick="logout()">ログアウト</button>
+            </div>
+        </header>
+
+        <!-- ログインフォーム -->
+        <div class="login-section" id="loginSection">
+            <div class="login-form">
+                <h2>雀荘経営者ログイン</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="login-btn">ログイン</button>
+                </form>
+                <div class="register-link">
+                    <p>アカウントをお持ちでない方は<a href="#" onclick="showRegister()">こちらから登録</a></p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="section">
-        <h2 class="section">Your Wallet</h2>
-        <div class="itemContainer">
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">lend</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">lend</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">lend</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">lend</button>
-          </div>
-          <div class="item">
-            <img
-              class="item"
-              src="https://image.binance.vision/editor-uploads-original/9c15d9647b9643dfbc5e522299d13593.png"
-            />
-            <h3 class="item">BAYC #189</h3>
-            <button class="item">lend</button>
-          </div>
+
+        <!-- 管理ダッシュボード -->
+        <div class="dashboard" id="dashboard" style="display: none;">
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="showSection('shop-registration')">雀荘情報登録</button>
+                <button class="nav-btn" onclick="showSection('shop-management')">雀荘管理</button>
+                <button class="nav-btn" onclick="showSection('reservations')">予約管理</button>
+            </nav>
+
+            <!-- 雀荘情報登録セクション -->
+            <section class="content-section" id="shop-registration">
+                <h2>雀荘情報登録</h2>
+                <form id="shopRegistrationForm" class="shop-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="shopName">雀荘名</label>
+                            <input type="text" id="shopName" name="shopName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shopType">雀荘タイプ</label>
+                            <select id="shopType" name="shopType" required>
+                                <option value="">選択してください</option>
+                                <option value="フリー雀荘">フリー雀荘</option>
+                                <option value="セット雀荘">セット雀荘</option>
+                                <option value="フリー・セット両方">フリー・セット両方</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prefecture">都道府県</label>
+                            <select id="prefecture" name="prefecture" required>
+                                <option value="">選択してください</option>
+                                <option value="東京都">東京都</option>
+                                <option value="神奈川県">神奈川県</option>
+                                <option value="大阪府">大阪府</option>
+                                <option value="愛知県">愛知県</option>
+                                <option value="福岡県">福岡県</option>
+                                <!-- 他の都道府県も追加可能 -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">住所</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">電話番号</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tables">卓数</label>
+                            <input type="number" id="tables" name="tables" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="openTime">営業開始時間</label>
+                            <input type="time" id="openTime" name="openTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="closeTime">営業終了時間</label>
+                            <input type="time" id="closeTime" name="closeTime" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gameRates">ゲーム料金</label>
+                        <textarea id="gameRates" name="gameRates" rows="3" placeholder="例：フリー 300-500、セット 1時間 1000円"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amenities">設備・サービス</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="amenities" value="禁煙席"> 禁煙席</label>
+                            <label><input type="checkbox" name="amenities" value="喫煙席"> 喫煙席</label>
+                            <label><input type="checkbox" name="amenities" value="女性専用席"> 女性専用席</label>
+                            <label><input type="checkbox" name="amenities" value="駐車場"> 駐車場</label>
+                            <label><input type="checkbox" name="amenities" value="WiFi"> WiFi</label>
+                            <label><input type="checkbox" name="amenities" value="飲食提供"> 飲食提供</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">雀荘の特徴・PR</label>
+                        <textarea id="description" name="description" rows="4" placeholder="雀荘の特徴やアピールポイントを記入してください"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">雀荘情報を登録</button>
+                        <button type="reset" class="reset-btn">リセット</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 雀荘管理セクション -->
+            <section class="content-section" id="shop-management" style="display: none;">
+                <h2>登録済み雀荘一覧</h2>
+                <div id="shopList" class="shop-list">
+                    <!-- 登録された雀荘一覧がここに表示される -->
+                </div>
+            </section>
+
+            <!-- 予約管理セクション -->
+            <section class="content-section" id="reservations" style="display: none;">
+                <h2>予約管理</h2>
+                <div class="reservations-content">
+                    <p>予約管理機能は今後実装予定です。</p>
+                </div>
+            </section>
         </div>
-      </div>
+
+        <!-- 新規登録フォーム -->
+        <div class="register-section" id="registerSection" style="display: none;">
+            <div class="register-form">
+                <h2>新規アカウント登録</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="regName">お名前</label>
+                        <input type="text" id="regName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">メールアドレス</label>
+                        <input type="email" id="regEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">パスワード</label>
+                        <input type="password" id="regPassword" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPasswordConfirm">パスワード確認</label>
+                        <input type="password" id="regPasswordConfirm" name="passwordConfirm" required>
+                    </div>
+                    <button type="submit" class="register-btn">登録</button>
+                </form>
+                <div class="login-link">
+                    <p>既にアカウントをお持ちの方は<a href="#" onclick="showLogin()">こちらからログイン</a></p>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
+
+    <script src="scripts/main.js"></script>
+</body>
 </html>
